@@ -1,0 +1,45 @@
+# .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+
+# Node / React
+**/node_modules/
+frontend/dist/
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Variables y secretos
+.env
+.env.*
+!.env.example
+
+# Cobertura y pruebas
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Sonar
+.sonar/
+.scannerwork/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Snyk / Semgrep
+.snyk
+semgrep-report.json
+snyk-report.json
+backend/OnlineExam.Api/appsettings.Development.json

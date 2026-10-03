@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY backend/OnlineExam.slnx backend/
+COPY backend/OnlineExam.Api/OnlineExam.Api.csproj backend/OnlineExam.Api/
+COPY backend/OnlineExam.Domain/OnlineExam.Domain.csproj backend/OnlineExam.Domain/
+COPY backend/OnlineExam.Infrastructure/OnlineExam.Infrastructure.csproj backend/OnlineExam.Infrastructure/
+
+RUN dotnet restore backend/OnlineExam.Api/OnlineExam.Api.csproj
+
+COPY backend/ backend/
+
+RUN dotnet publish backend/OnlineExam.Api/OnlineExam.Api.csproj \
+    -c Release \
+    -o /app/publish \
+    --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "OnlineExam.Api.dll"]
